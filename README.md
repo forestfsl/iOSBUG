@@ -16,5 +16,23 @@ Bug是这样的，两个控制器的状态栏和导航栏样式不一样的适�
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleDefault; //UIStatusBarStyleDefault 这个值只是作为一个例子使用
 }
+例子下载链接https://github.com/forestfsl/iOSBUG/
 
 
+第二：iOS 10 设置圆角的视图竟然没有显示，但是在层级关系那里可以看到
+原因是：获取UIView的frame不正确问题（返回的width & height 都是 1000）
+Xcode8方式编译后，在UIView还没有“布局完毕”的时候默认返回的frame的size大小为1000x1000，等到“布局完毕”后才能获取到正确的大小。
+-(void)awakeFromNib{
+    [super awakeFromNib];    
+    //调用此方法后，才可以获取到正确的frame
+    [self.view layoutIfNeeded];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+     //调用此方法后，才可以获取到正确的frame
+    [self.view layoutIfNeeded];
+}
+
+
+第三：WKWebView 加载的进度条没有出来，原因是创建ProgressView 加载到ViewDidLoad，之后放到ViewWillAppear，进度条就显示了（进度条是添加在navigationBar view上面的 [self.navigationController.view addSubview:self.progressView]；
