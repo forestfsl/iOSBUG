@@ -48,3 +48,6 @@ Xcode8方式编译后，在UIView还没有“布局完毕”的时候默认返�
 If YES, the image is drawn lighter when the button is highlighted. The default value is YES.）
 ` @warming 如果是  UIButton *button = [[UIButton alloc]init]; 这样的话，button点击时候就会变灰！
 
+>第四：UIImageView里面的图片只能显示一半，但是父类ScrollView已经是屏幕的宽带和高度，UIimageVeiw的frame和父类等大？
+因为没有设置 imageV.clipsToBounds = YES;把超出父类给裁剪掉，效果就正常了！
+
